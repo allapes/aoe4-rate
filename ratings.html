@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rating Display</title>
-    <style>
-        /* ここにCSSスタイルを追加 */
-    </style>
+    <script>
+        function fetchData() {
+            fetch('http://127.0.0.1:5000/ratings')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalRating').textContent = data.total_rating;
+                    document.getElementById('averageRating').textContent = data.average_rating;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 30秒ごとにデータを更新
+        setInterval(fetchData, 30000);
+
+        // 初回読み込み時にデータを取得
+        window.onload = fetchData;
+    </script>
 </head>
 <body>
-    <div id="average_rating"></div>
-    <div id="total_rating"></div>
-
-    <script>
-        fetch('http://127.0.0.1:5000/ratings')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('average_rating').innerText = data.average_rating;
-                document.getElementById('total_rating').innerText = data.total_rating;
-            })
-            .catch(error => console.error('Error:', error));
-    </script>
+    <h1>Game Ratings</h1>
+    <p>Total Rating: <span id="totalRating"></span></p>
+    <p>Average Rating: <span id="averageRating"></span></p>
 </body>
 </html>
-
