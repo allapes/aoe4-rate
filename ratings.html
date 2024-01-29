@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rating Display</title>
+    <style>
+        /* ここにCSSスタイルを追加 */
+    </style>
+</head>
+<body>
+    <div id="average_rating"></div>
+    <div id="total_rating"></div>
+
+    <script>
+        fetch('http://127.0.0.1:5000/ratings')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('average_rating').innerText = data.average_rating;
+                document.getElementById('total_rating').innerText = data.total_rating;
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
+
